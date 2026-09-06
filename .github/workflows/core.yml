@@ -53,7 +53,7 @@ concurrency:
 env:
   # The one variable that separates the arms: on baseline, action-checkout
   # skips its Set up Chalk step entirely.
-  CHALK_ON: ${{ github.event_name == 'workflow_dispatch' && inputs.leg != 'baseline' }}
+  CHALK_ON: ${{ inputs.leg == 'instrumented' }}
 
 run-name: "Core Tests ${{ inputs.leg || 'push' }} ${{ inputs.racecar_run }}"
 
@@ -114,8 +114,8 @@ jobs:
       timeout-minutes: 15
       continue-on-error: False
       env:
-        source: ${{ (github.event_name == 'push' && github.event.before) || 'origin/master' }}
-        target: ${{ (github.event_name == 'push' && github.event.after) || 'HEAD' }}
+        source: ${{ ('push' == 'push' && github.event.before) || 'origin/master' }}
+        target: ${{ ('push' == 'push' && github.event.after) || 'HEAD' }}
       shell: bash
       run: |
         flags=()
