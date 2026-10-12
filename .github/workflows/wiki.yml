@@ -1,7 +1,5 @@
 name: Update wiki
 on:
-  schedule:
-    - cron: '22 22 * * *'
   workflow_dispatch:
 
 permissions: {}
